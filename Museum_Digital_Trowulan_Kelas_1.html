@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum Digital Trowulan - Petualangan Kelas 1</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;background:#fff8e7;color:#4b321f}
+  .wrap{max-width:1100px;margin:auto;padding:18px}
+  header{background:linear-gradient(135deg,#f5c451,#8ecae6);border-radius:24px;padding:24px;text-align:center;box-shadow:0 5px 0 #d89f2b}
+  h1{margin:0;font-size:34px;color:#573b20}
+  header p{font-size:18px;margin:8px 0 0}
+  .badge{display:inline-block;background:white;border-radius:30px;padding:7px 14px;margin-top:12px;font-weight:bold}
+  .screen{display:none;margin-top:20px;background:white;border-radius:22px;padding:22px;box-shadow:0 4px 14px #0001}
+  .screen.active{display:block}
+  .menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px}
+  button{border:0;border-radius:16px;padding:15px 18px;font-size:17px;font-weight:bold;cursor:pointer;background:#4ea8de;color:white;box-shadow:0 4px 0 #2779aa}
+  button:hover{transform:translateY(-2px)}
+  button.yellow{background:#f4b942;color:#4b321f;box-shadow:0 4px 0 #c68c19}
+  button.green{background:#65b891;box-shadow:0 4px 0 #408064}
+  button.red{background:#e98272;box-shadow:0 4px 0 #b8574a}
+  .back{background:#eee;color:#555;box-shadow:none;margin-bottom:12px}
+  .sites{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .site{border:3px solid #f1d99c;border-radius:18px;padding:16px;background:#fffdf5}
+  .site .icon{font-size:52px}
+  .site h3{margin:7px 0}
+  .site p{line-height:1.45}
+  .progress{height:16px;background:#eee;border-radius:20px;overflow:hidden;margin:12px 0}
+  .bar{height:100%;background:#65b891;width:0%;transition:.3s}
+  .qbox{background:#fff7dc;border:3px dashed #e7bd57;border-radius:18px;padding:18px;margin:14px 0}
+  .question{font-size:23px;font-weight:bold;line-height:1.35}
+  .answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+  .answers button{background:#8ecae6;box-shadow:0 4px 0 #5798b6}
+  .answers button.correct{background:#65b891!important}
+  .answers button.wrong{background:#e98272!important}
+  .feedback{font-size:20px;font-weight:bold;min-height:30px;margin-top:14px}
+  .score{font-size:20px;background:#fff0b8;padding:10px;border-radius:14px;display:inline-block}
+  .stars{font-size:34px;letter-spacing:4px}
+  .certificate{background:linear-gradient(135deg,#fff8d8,#e5f7ff);border:8px double #d5a72b;text-align:center;padding:28px;border-radius:18px}
+  .certificate h2{font-size:30px}
+  .nameInput{font-size:19px;padding:12px;border-radius:12px;border:2px solid #ccc;width:min(100%,400px)}
+  .mini{font-size:14px;color:#766}
+  @media(max-width:600px){h1{font-size:27px}.answers{grid-template-columns:1fr}.question{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div style="font-size:52px">🏛️ 🧭 📚 🔢</div>
+  <h1>MUSEUM DIGITAL TROWULAN</h1>
+  <p>Petualangan Seru Menjelajah Situs Majapahit</p>
+  <div class="badge">Untuk Siswa Kelas 1 SD</div>
+</header>
+
+<section id="home" class="screen active">
+  <h2>🎒 Selamat Datang, Penjelajah Cilik!</h2>
+  <p>Jelajahi situs bersejarah Trowulan, baca cerita pendek, lalu selesaikan tantangan <b>literasi</b> dan <b>numerasi</b>.</p>
+  <label><b>Nama Penjelajah:</b></label><br>
+  <input id="playerName" class="nameInput" placeholder="Tulis namamu di sini">
+  <div class="menu">
+    <button onclick="show('museum')">🏛️ Masuk Museum</button>
+    <button class="yellow" onclick="startQuiz('literasi')">📖 Misi Literasi</button>
+    <button class="green" onclick="startQuiz('numerasi')">🔢 Misi Numerasi</button>
+    <button class="red" onclick="showCertificate()">🏆 Lencana & Sertifikat</button>
+  </div>
+  <p class="mini">Tip: Kerjakan semua misi untuk mendapatkan 10 bintang!</p>
+</section>
+
+<section id="museum" class="screen">
+  <button class="back" onclick="show('home')">⬅ Kembali</button>
+  <h2>🗺️ Peta Museum Digital</h2>
+  <p>Pilih salah satu situs untuk membaca informasi singkat.</p>
+  <div class="sites">
+    <div class="site"><div class="icon">🐭</div><h3>Candi Tikus</h3><p>Candi Tikus adalah situs bersejarah di Trowulan. Bentuknya seperti bangunan di dalam kolam.</p><button class="yellow" onclick="siteFact('Candi Tikus','Di sini kita belajar kata: KOLAM. K-O-L-A-M terdiri dari 5 huruf.')">🔎 Temukan Kata</button></div>
+    <div class="site"><div class="icon">🚪</div><h3>Candi Bajang Ratu</h3><p>Gapura Bajang Ratu merupakan salah satu bangunan peninggalan masa Majapahit di kawasan Trowulan.</p><button class="yellow" onclick="siteFact('Bajang Ratu','Kata penting: GAPURA. Ayo hitung 6 huruf pada kata GAPURA!')">🔎 Temukan Kata</button></div>
+    <div class="site"><div class="icon">🌳</div><h3>Wringin Lawang</h3><p>Wringin Lawang dikenal sebagai gapura bata yang berdiri megah di Trowulan.</p><button class="yellow" onclick="siteFact('Wringin Lawang','Kata penting: BATA. B-A-T-A terdiri dari 4 huruf.')">🔎 Temukan Kata</button></div>
+    <div class="site"><div class="icon">💧</div><h3>Kolam Segaran</h3><p>Kolam Segaran adalah salah satu situs air yang terkenal di kawasan Trowulan.</p><button class="yellow" onclick="siteFact('Kolam Segaran','Ayo baca: KO-LAM SE-GA-RAN. Kata SE-GA-RAN memiliki 7 huruf.')">🔎 Temukan Kata</button></div>
+    <div class="site"><div class="icon">🏯</div><h3>Candi Brahu</h3><p>Candi Brahu merupakan bangunan bata bersejarah yang berada di kawasan Trowulan.</p><button class="yellow" onclick="siteFact('Candi Brahu','Kata penting: CANDI. C-A-N-D-I terdiri dari 5 huruf.')">🔎 Temukan Kata</button></div>
+    <div class="site"><div class="icon">🏺</div><h3>Museum Majapahit</h3><p>Museum menyimpan dan menampilkan berbagai benda yang berkaitan dengan sejarah dan budaya kawasan Trowulan.</p><button class="yellow" onclick="siteFact('Museum Majapahit','Museum adalah tempat untuk belajar dan mengenal benda-benda bersejarah.')">🔎 Temukan Kata</button></div>
+  </div>
+</section>
+
+<section id="quiz" class="screen">
+  <button class="back" onclick="show('home')">⬅ Beranda</button>
+  <div class="score">⭐ Skor: <span id="score">0</span></div>
+  <div class="progress"><div id="bar" class="bar"></div></div>
+  <h2 id="quizTitle"></h2>
+  <div class="qbox">
+    <div id="question" class="question"></div>
+    <div id="answers" class="answers"></div>
+    <div id="feedback" class="feedback"></div>
+  </div>
+  <button id="nextBtn" class="green" style="display:none" onclick="nextQuestion()">➡ Soal Berikutnya</button>
+</section>
+
+<section id="certificate" class="screen">
+  <button class="back" onclick="show('home')">⬅ Beranda</button>
+  <div class="certificate">
+    <div class="stars" id="stars">☆☆☆☆☆☆☆☆☆☆</div>
+    <h2>🏆 LENCANA PENJELAJAH TROWULAN 🏆</h2>
+    <p>Hebat! <b id="certName">Penjelajah Cilik</b> telah menyelesaikan permainan Museum Digital Trowulan.</p>
+    <p>Skor akhir: <strong id="certScore">0</strong></p>
+    <p>Terus membaca, berhitung, dan mencintai sejarah Indonesia! 🇮🇩</p>
+    <button class="yellow" onclick="window.print()">🖨️ Cetak Lencana</button>
+  </div>
+</section>
+
+<div id="modal" style="display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;padding:20px">
+  <div style="background:white;max-width:520px;border-radius:22px;padding:25px;text-align:center">
+    <div style="font-size:48px">🔍</div><h2 id="modalTitle"></h2><p id="modalText" style="font-size:20px;line-height:1.5"></p>
+    <button onclick="closeModal()">Mantap! 👍</button>
+  </div>
+</div>
+</div>
+
+<script>
+const data = {
+ literasi:[
+  {q:"Situs yang dikenal sebagai gapura bata adalah ...",a:["Wringin Lawang","Kolam Segaran","Candi Tikus","Candi Brahu"],c:0},
+  {q:"Kata CANDI memiliki berapa huruf?",a:["3","4","5","6"],c:2},
+  {q:"Lengkapi kata: K _ L A M",a:["E","O","A","U"],c:1},
+  {q:"Museum digunakan untuk ...",a:["berlari","belajar benda bersejarah","tidur","berenang"],c:1},
+  {q:"Kata GAPURA dimulai dengan huruf ...",a:["G","B","P","R"],c:0},
+  {q:"Manakah yang termasuk situs di Trowulan?",a:["Candi Tikus","Gunung Bromo","Pantai Kuta","Danau Toba"],c:0},
+  {q:"Bacalah: 'Kolam Segaran adalah situs air.' Apa nama situs itu?",a:["Candi Brahu","Kolam Segaran","Bajang Ratu","Wringin Lawang"],c:1},
+  {q:"Huruf pertama pada kata BATA adalah ...",a:["A","B","T","D"],c:1},
+  {q:"Kata MUSEUM berarti tempat untuk ...",a:["belajar sejarah","memasak","bermain bola","tidur"],c:0},
+  {q:"Pilih kata yang berhubungan dengan sejarah.",a:["Candi","Sepeda","Kelereng","Payung"],c:0}
+ ],
+ numerasi:[
+  {q:"Ada 3 gambar candi. Datang lagi 2 gambar. Jadi ada ...",a:["4","5","6","7"],c:1},
+  {q:"Di museum ada 6 benda. 2 benda dipindahkan. Tinggal ...",a:["2","3","4","5"],c:2},
+  {q:"Hitung: 4 + 3 = ...",a:["6","7","8","9"],c:1},
+  {q:"Hitung: 8 - 3 = ...",a:["4","5","6","7"],c:1},
+  {q:"Ada 5 anak di Candi Tikus dan 2 anak di museum. Jumlahnya ...",a:["6","7","8","9"],c:1},
+  {q:"Manakah jumlah yang paling banyak?",a:["2","5","3","4"],c:1},
+  {q:"Urutkan dari kecil ke besar: 3, 1, 4, 2",a:["1,2,3,4","4,3,2,1","2,1,4,3","1,3,2,4"],c:0},
+  {q:"Ada 10 kartu sejarah. Dipakai 6. Sisa kartu ...",a:["3","4","5","6"],c:1},
+  {q:"Satu Candi Tikus memiliki 4 gambar anak. Jika ada 2 kelompok, jumlah anak ...",a:["6","7","8","9"],c:2},
+  {q:"Hitung: 5 + 5 = ...",a:["8","9","10","11"],c:2}
+ ]
+};
+let mode="", index=0, score=0, answered=false;
+function show(id){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+function siteFact(title,text){
+ document.getElementById('modalTitle').textContent=title;
+ document.getElementById('modalText').textContent=text;
+ document.getElementById('modal').style.display='flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function startQuiz(m){
+ mode=m; index=0; score=0; answered=false;
+ document.getElementById('quizTitle').textContent=m==="literasi"?"📖 Misi Literasi Trowulan":"🔢 Misi Numerasi Trowulan";
+ document.getElementById('score').textContent=score;
+ show('quiz'); renderQuestion();
+}
+function renderQuestion(){
+ const item=data[mode][index];
+ answered=false;
+ document.getElementById('question').textContent=(index+1)+". "+item.q;
+ const box=document.getElementById('answers'); box.innerHTML="";
+ item.a.forEach((ans,i)=>{
+   const b=document.createElement('button'); b.textContent=ans;
+   b.onclick=()=>answer(i,b); box.appendChild(b);
+ });
+ document.getElementById('feedback').textContent="";
+ document.getElementById('nextBtn').style.display='none';
+ document.getElementById('bar').style.width=(index/data[mode].length*100)+"%";
+}
+function answer(i,btn){
+ if(answered)return; answered=true;
+ const item=data[mode][index];
+ document.querySelectorAll('#answers button').forEach((b,j)=>{
+   if(j===item.c)b.classList.add('correct');
+ });
+ if(i===item.c){
+   score+=10; document.getElementById('feedback').textContent="🎉 Benar! Hebat sekali!";
+ }else{
+   btn.classList.add('wrong'); document.getElementById('feedback').textContent="😊 Belum tepat. Yuk belajar lagi!";
+ }
+ document.getElementById('score').textContent=score;
+ document.getElementById('nextBtn').style.display='inline-block';
+}
+function nextQuestion(){
+ index++;
+ if(index>=data[mode].length){
+   document.getElementById('bar').style.width="100%";
+   alert("Misi selesai! Skormu "+score);
+   showCertificate();
+ }else renderQuestion();
+}
+function showCertificate(){
+ const name=document.getElementById('playerName').value.trim()||"Penjelajah Cilik";
+ document.getElementById('certName').textContent=name;
+ document.getElementById('certScore').textContent=score;
+ const n=Math.min(10,Math.floor(score/10));
+ document.getElementById('stars').textContent="★".repeat(n)+"☆".repeat(10-n);
+ show('certificate');
+}
+</script>
+</body>
+</html>
